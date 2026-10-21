@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f1e8">
+  <meta name="description" content="Простое недельное меню по принципу Гарвардской тарелки и точный список покупок для семьи.">
+  <title>Тарелка — меню на неделю</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Prata&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#"><span class="brand-mark" aria-hidden="true">◒</span><span>тарелка</span></a>
+    <nav class="topnav" aria-label="Навигация">
+      <button class="nav-link active" data-view="menu">Меню</button>
+      <button class="nav-link" data-view="shopping">Покупки <span id="shopCount" class="count">0</span></button>
+    </nav>
+    <button class="ghost-btn" id="resetBtn" title="Начать заново">Новый план</button>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">СПОКОЙНАЯ НЕДЕЛЯ НАЧИНАЕТСЯ ЗДЕСЬ</p>
+        <h1>Простая еда.<br><em>Умный баланс.</em></h1>
+        <p class="hero-lead">Соберите меню для всей семьи по принципу Гарвардской тарелки — без сложных рецептов и ежедневной готовки.</p>
+      </div>
+      <div class="plate-wrap">
+        <figure class="hero-photo">
+          <img src="assets/meal-prep-hero.webp" alt="Разноцветные сбалансированные блюда и заготовки на неделю">
+          <figcaption><span>≈ 60 мин</span> на все заготовки</figcaption>
+        </figure>
+        <div class="plate" aria-label="Схема Гарвардской тарелки">
+          <div class="plate-part vegetables"><span>½</span><small>овощи<br>и фрукты</small></div>
+          <div class="plate-part grains"><span>¼</span><small>цельные<br>злаки</small></div>
+          <div class="plate-part protein"><span>¼</span><small>полезный<br>белок</small></div>
+          <div class="plate-center">баланс</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="planner" id="planner">
+      <div class="section-head">
+        <div><span class="step">01</span><h2>Для кого готовим?</h2></div>
+        <p>Добавьте всех, кто будет есть дома. Порции рассчитаются индивидуально.</p>
+      </div>
+      <div id="peopleList" class="people-list"></div>
+      <button id="addPersonBtn" class="add-person"><span>＋</span> Добавить человека</button>
+
+      <div class="preferences">
+        <label class="field"><span>Ритм недели</span>
+          <select id="activity">
+            <option value="0.9">Спокойный</option>
+            <option value="1" selected>Обычный</option>
+            <option value="1.12">Активный</option>
+          </select>
+        </label>
+        <label class="field"><span>Стиль готовки</span>
+          <select id="cookStyle">
+            <option value="fresh">Больше свежего</option>
+            <option value="mixed" selected>Свежое + заготовки</option>
+            <option value="fast">Максимально быстро</option>
+          </select>
+        </label>
+        <label class="toggle-field">
+          <input id="vegetarian" type="checkbox"><span class="switch"></span>
+          <span><strong>Без мяса</strong><small>Рыбу тоже заменим</small></span>
+        </label>
+      </div>
+      <button id="generateBtn" class="primary-btn"><span>Составить меню на неделю</span><span aria-hidden="true">→</span></button>
+      <p class="disclaimer">План носит общий информационный характер. При заболеваниях, беременности, аллергиях или лечебной диете обсудите питание с врачом.</p>
+    </section>
+
+    <section id="results" class="results hidden" aria-live="polite">
+      <div class="results-title">
+        <div><p class="eyebrow">ВАШ ПЛАН ГОТОВ</p><h2>Неделя без вопроса «что приготовить?»</h2></div>
+        <button id="openShopping" class="shopping-btn">Список покупок <span>→</span></button>
+      </div>
+      <div class="summary-strip">
+        <div><strong id="summaryPeople">1</strong><span>человек</span></div>
+        <div><strong id="summaryTime">20</strong><span>минут в среднем</span></div>
+        <div><strong id="summaryPrep">3</strong><span>базовые заготовки</span></div>
+        <div class="plate-key"><i></i><span>Каждый основной приём пищи следует пропорции ½ + ¼ + ¼</span></div>
+      </div>
+      <div id="batchPlan" class="batch-plan"></div>
+      <div id="weekGrid" class="week-grid"></div>
+    </section>
+
+    <section id="shoppingView" class="shopping-view hidden">
+      <div class="shopping-header">
+        <div><p class="eyebrow">СОБРАНО ИЗ ВАШЕГО МЕНЮ</p><h2>Список покупок</h2><p id="shoppingSubtitle"></p></div>
+        <div class="shopping-actions"><button id="copyList" class="outline-btn">Копировать</button><button id="printList" class="dark-btn">Печать</button></div>
+      </div>
+      <div class="progress-row"><div class="progress"><i id="shopProgress"></i></div><span id="progressText">0 из 0</span></div>
+      <div id="shoppingGrid" class="shopping-grid"></div>
+    </section>
+  </main>
+
+  <nav class="mobile-nav" aria-label="Мобильная навигация">
+    <button class="active" data-view="menu"><span>◒</span>Меню</button>
+    <button data-view="shopping"><span>✓</span>Покупки</button>
+  </nav>
+
+  <template id="personTemplate">
+    <article class="person-card">
+      <div class="person-avatar">А</div>
+      <label class="field name-field"><span>Имя</span><input class="person-name" value="Алекс" maxlength="20"></label>
+      <label class="field"><span>Возраст</span><div class="unit-input"><input class="person-age" type="number" min="2" max="100" value="32"><b>лет</b></div></label>
+      <label class="field"><span>Пол</span><select class="person-sex"><option value="f">Женский</option><option value="m">Мужской</option></select></label>
+      <label class="field"><span>Вес</span><div class="unit-input"><input class="person-weight" type="number" min="12" max="250" value="65"><b>кг</b></div></label>
+      <button class="remove-person" aria-label="Удалить человека">×</button>
+    </article>
+  </template>
+
+  <div id="toast" class="toast" role="status"></div>
+  <footer><span>◒ тарелка</span><p>Питайтесь разнообразно · двигайтесь · пейте воду</p><a href="https://nutritionsource.hsph.harvard.edu/healthy-eating-plate/" target="_blank" rel="noreferrer">Принцип тарелки ↗</a></footer>
+  <script src="app.js"></script>
+</body>
+</html>
