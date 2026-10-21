@@ -1,5 +1,6 @@
-const CACHE='tarelka-v1';
-const APP=['./','./index.html','./styles.css','./app.js','./manifest.webmanifest','./assets/meal-prep-hero.webp','./assets/salmon-bowl.webp','./assets/chickpea-bowl.webp','./assets/icon-192.png','./assets/icon-512.png'];
+const CACHE='tarelka-v3';
+const DISHES=['overnight-oats','egg-avocado-toast','cottage-cheese-apple','spinach-omelet','yogurt-banana','chicken-bulgur','salmon-buckwheat','chickpea-couscous','turkey-rice','lentil-pasta','cod-potato','tofu-rice','beans-quinoa','chicken-pita','buckwheat-mushroom-egg','chicken-barley-pumpkin','tuna-pasta-salad','lentil-curry-rice','turkey-quinoa-slaw'].map(name=>`./assets/dishes/${name}.webp`);
+const APP=['./','./index.html','./styles.css','./app.js','./manifest.webmanifest','./assets/meal-prep-hero.webp','./assets/icon-192.png','./assets/icon-512.png',...DISHES];
 self.addEventListener('install',event=>event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(APP)).then(()=>self.skipWaiting())));
 self.addEventListener('activate',event=>event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key!==CACHE).map(key=>caches.delete(key)))).then(()=>self.clients.claim())));
 self.addEventListener('fetch',event=>{if(event.request.method!=='GET'||new URL(event.request.url).origin!==location.origin)return;event.respondWith(fetch(event.request).then(response=>{const copy=response.clone();caches.open(CACHE).then(cache=>cache.put(event.request,copy));return response}).catch(()=>caches.match(event.request).then(hit=>hit||caches.match('./index.html'))))});

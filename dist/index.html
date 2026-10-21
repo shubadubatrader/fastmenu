@@ -52,15 +52,23 @@
         <div><span class="step">01</span><h2>Для кого готовим?</h2></div>
         <p>Добавьте всех, кто будет есть дома. Порции рассчитаются индивидуально.</p>
       </div>
+      <div class="saved-panel">
+        <div><strong>Мои недели</strong><span>Сохранены только на этом устройстве</span></div>
+        <div id="savedPlans" class="saved-plans"><span class="empty-save">Пока нет сохранённых планов</span></div>
+      </div>
       <div id="peopleList" class="people-list"></div>
       <button id="addPersonBtn" class="add-person"><span>＋</span> Добавить человека</button>
 
-      <div class="preferences">
+      <div class="preferences preferences-wide">
+        <label class="field"><span>Неделя начинается</span><input id="weekStart" type="date"></label>
+        <label class="field"><span>Режим</span>
+          <select id="planMode"><option value="auto" selected>Собрать автоматически</option><option value="manual">Выбрать блюда вручную</option></select>
+        </label>
         <label class="field"><span>Ритм недели</span>
           <select id="activity">
-            <option value="0.9">Спокойный</option>
-            <option value="1" selected>Обычный</option>
-            <option value="1.12">Активный</option>
+            <option value="sedentary">Малоподвижный</option>
+            <option value="low" selected>Умеренный</option>
+            <option value="active">Активный</option>
           </select>
         </label>
         <label class="field"><span>Стиль готовки</span>
@@ -75,19 +83,24 @@
           <span><strong>Без мяса</strong><small>Рыбу тоже заменим</small></span>
         </label>
       </div>
+      <div id="manualBuilder" class="manual-builder hidden">
+        <div class="manual-head"><div><strong>Соберите неделю вручную</strong><span>Выберите блюда — продукты пересчитаются сами</span></div><button id="fillManual" class="outline-btn">Заполнить без повторов</button></div>
+        <div id="manualGrid"></div>
+      </div>
       <button id="generateBtn" class="primary-btn"><span>Составить меню на неделю</span><span aria-hidden="true">→</span></button>
       <p class="disclaimer">План носит общий информационный характер. При заболеваниях, беременности, аллергиях или лечебной диете обсудите питание с врачом.</p>
     </section>
 
     <section id="results" class="results hidden" aria-live="polite">
       <div class="results-title">
-        <div><p class="eyebrow">ВАШ ПЛАН ГОТОВ</p><h2>Неделя без вопроса «что приготовить?»</h2></div>
-        <button id="openShopping" class="shopping-btn">Список покупок <span>→</span></button>
+        <div><p class="eyebrow">ВАШ ПЛАН ГОТОВ</p><h2>Неделя без вопроса «что приготовить?»</h2><p id="planDates" class="plan-dates"></p></div>
+        <div class="result-actions"><button id="savePlanBtn" class="outline-btn">Сохранить неделю</button><button id="openShopping" class="shopping-btn">Список покупок <span>→</span></button></div>
       </div>
       <div class="summary-strip">
         <div><strong id="summaryPeople">1</strong><span>человек</span></div>
         <div><strong id="summaryTime">20</strong><span>минут в среднем</span></div>
         <div><strong id="summaryPrep">3</strong><span>базовые заготовки</span></div>
+        <div><strong id="summaryEnergy">—</strong><span>среднее ккал/день</span></div>
         <div class="plate-key"><i></i><span>Каждый основной приём пищи следует пропорции ½ + ¼ + ¼</span></div>
       </div>
       <div id="batchPlan" class="batch-plan"></div>
@@ -116,6 +129,7 @@
       <label class="field"><span>Возраст</span><div class="unit-input"><input class="person-age" type="number" min="2" max="100" value="32"><b>лет</b></div></label>
       <label class="field"><span>Пол</span><select class="person-sex"><option value="f">Женский</option><option value="m">Мужской</option></select></label>
       <label class="field"><span>Вес</span><div class="unit-input"><input class="person-weight" type="number" min="12" max="250" value="65"><b>кг</b></div></label>
+      <label class="field"><span>Рост</span><div class="unit-input"><input class="person-height" type="number" min="80" max="230" value="165"><b>см</b></div></label>
       <button class="remove-person" aria-label="Удалить человека">×</button>
     </article>
   </template>
