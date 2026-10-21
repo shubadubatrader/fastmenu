@@ -94,7 +94,7 @@
     <section id="results" class="results hidden" aria-live="polite">
       <div class="results-title">
         <div><p class="eyebrow">ВАШ ПЛАН ГОТОВ</p><h2>Неделя без вопроса «что приготовить?»</h2><p id="planDates" class="plan-dates"></p></div>
-        <div class="result-actions"><button id="savePlanBtn" class="outline-btn">Сохранить неделю</button><button id="openShopping" class="shopping-btn">Список покупок <span>→</span></button></div>
+        <div class="result-actions"><button id="randomizeBtn" class="randomize-btn">Случайное меню <span>↻</span></button><button id="savePlanBtn" class="outline-btn">Сохранить неделю</button><button id="openShopping" class="shopping-btn">Список покупок <span>→</span></button></div>
       </div>
       <div class="summary-strip">
         <div><strong id="summaryPeople">1</strong><span>человек</span></div>
@@ -133,6 +133,27 @@
       <button class="remove-person" aria-label="Удалить человека">×</button>
     </article>
   </template>
+
+  <div id="dishModal" class="dish-modal hidden" role="dialog" aria-modal="true" aria-labelledby="dishModalTitle">
+    <article class="dish-card-modal">
+      <button id="closeDishModal" class="dish-modal-close" aria-label="Закрыть карточку блюда">×</button>
+      <div class="dish-modal-photo"><img id="dishModalImage" src="" alt=""></div>
+      <div class="dish-modal-content">
+        <p class="eyebrow">КАРТОЧКА БЛЮДА</p>
+        <h2 id="dishModalTitle"></h2>
+        <p id="dishModalDescription" class="dish-modal-description"></p>
+        <div id="dishModalTags" class="dish-modal-tags"></div>
+        <div class="dish-modal-info">
+          <div><span>Время</span><strong id="dishModalTime"></strong></div>
+          <div><span>Количество</span><strong id="dishModalPortions"></strong></div>
+        </div>
+        <div class="dish-modal-recipe">
+          <section><h3>Ингредиенты</h3><ul id="dishModalIngredients"></ul></section>
+          <section><h3>Как приготовить</h3><ol id="dishModalSteps"></ol></section>
+        </div>
+      </div>
+    </article>
+  </div>
 
   <div id="toast" class="toast" role="status"></div>
   <footer><span>◒ тарелка</span><p>Питайтесь разнообразно · двигайтесь · пейте воду</p><a href="https://nutritionsource.hsph.harvard.edu/healthy-eating-plate/" target="_blank" rel="noreferrer">Принцип тарелки ↗</a></footer>
